@@ -19,8 +19,8 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
-            'preview_image' => asset($this->preview_image),
-            'detail_image' => asset($this->detail_image),
+            'preview_image' => $this->whenNull($this->preview_image, asset($this->preview_image)),
+            'detail_image' => $this->whenNull($this->detail_image, asset($this->detail_image)),
             'user' => new UserResource($this->whenLoaded('user')),
             'created_at' => $this->created_at,
             'active' => $this->active
