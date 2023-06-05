@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\LoginRequest;
-use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Requests\Api\Auth\LoginRequest;
+use App\Http\Requests\Api\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Http\Services\AuthService;
+use Error;
 use Exception;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    protected AuthService $service;
+    private AuthService $service;
     public function __construct(AuthService $service)
     {
         $this->middleware('auth:api')->except(['login', 'register']);
@@ -32,7 +32,7 @@ class AuthController extends Controller
     {
         try {
             return response()->json($this->service->register($request->validated()));
-        } catch (Exception $exception) {
+        } catch (Error $exception) {
             return response()->json(['error' => $exception->getMessage()], $exception->getCode());
         }
     }

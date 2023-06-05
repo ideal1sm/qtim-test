@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\User;
+use Error;
 use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
@@ -34,7 +35,7 @@ class AuthService
         $credentials['password'] = Hash::make($credentials['password']);
 
         if (!User::create($credentials))
-            throw new Exception('Ошибка при сохранении', 500);
+            throw new Error('Ошибка при сохранении', 500);
 
         return $this->login($credentialsForLogin);
     }

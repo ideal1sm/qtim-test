@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class PostStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,10 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email:rfc,dns|max:255',
-            'password' => 'required|string|min:3'
+            'title' => 'required|string|max:255|unique:App\Models\Post',
+            'description' => 'required|string|max:2000',
+            'preview_image' => 'nullable|file|mimes:pdf,jpg,jpeg,png,bmp',
+            'detail_image'  => 'nullable|file|mimes:pdf,jpg,jpeg,png,bmp',
         ];
     }
 }
